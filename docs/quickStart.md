@@ -120,10 +120,16 @@ ansible-playbook 07.cluster-addon.yml
 ``` bash
 kubectl version
 kubectl get componentstatus # 可以看到scheduler/controller-manager/etcd等组件 Healthy
-kubectl cluster-info # 可以看到kubernetes master(apiserver)组件 running
 kubectl get node # 可以看到单 node Ready状态
 kubectl get pod --all-namespaces # 可以查看所有集群pod状态，默认已安装网络插件、coredns、metrics-server等
 kubectl get svc --all-namespaces # 可以查看所有集群服务状态
+# 可以看到
+# kubernetes master(apiserver)组件 running
+# kubernetes-dashboard is running at..
+kubectl cluster-info 
+# 获取访问dashboard token 
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+# 使用浏览器访问前面``kubectl cluster-info ``获取的dashboard地址，最后一条命令获取的token登陆。
 ```
 ### 6.安装主要组件
 
